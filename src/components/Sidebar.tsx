@@ -22,6 +22,11 @@ const Sidebar = () => {
                             Profile
                         </button>
                     </li>
+                    <li className="nav-item">
+                        <button className="nav-link" onClick={() => navigate('/login')}>
+                            Login
+                        </button>
+                    </li>
                 </ul>
             </div>
         </nav>
