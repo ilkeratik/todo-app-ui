@@ -13,10 +13,20 @@ const Login = () => {
             window.location.href = cognitoUrl;
         };
 
-        redirectToCognito();
+        setTimeout(() => {
+            redirectToCognito();
+        }, 100);
     }, []);
 
-    return <div>Redirecting to login...</div>;
+    return (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <div>
+                <div className="spinner-border" role="status" style={{ display: 'block', margin: '0 auto' }}>
+                </div>
+                <p className='mt-2 text-center'>Redirecting to AWS IDP login...</p>
+            </div>
+        </div>
+    );
 };
 
 export default Login;
