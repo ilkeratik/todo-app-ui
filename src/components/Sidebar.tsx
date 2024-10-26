@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom';
+import useAuth from '../hooks/UseAuth';
 
 const Sidebar = () => {
+    const { isAuthenticated } = useAuth();
     const navigate = useNavigate();
 
     return (
@@ -22,11 +24,19 @@ const Sidebar = () => {
                             Profile
                         </button>
                     </li>
-                    <li className="nav-item">
-                        <button className="nav-link" onClick={() => navigate('/login')}>
-                            Login
-                        </button>
-                    </li>
+                    {isAuthenticated ?
+                        (
+                            <li className="nav-item">
+                                <button className="nav-link" onClick={() => navigate('/logout')}>
+                                    Logout
+                                </button>
+                            </li>) :
+                        (
+                            <li className="nav-item">
+                                <button className="nav-link" onClick={() => navigate('/login')}>
+                                    Login
+                                </button>
+                            </li>)}
                 </ul>
             </div>
         </nav>
