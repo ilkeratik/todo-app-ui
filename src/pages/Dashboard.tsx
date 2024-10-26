@@ -1,13 +1,26 @@
+import { useState } from "react";
+import { Button, Col, Container, Row } from "react-bootstrap";
+import CreateToDoModal from "./CreateToDoModal";
+
 const Dashboard = () => {
+
+    const [showModal, setShowModal] = useState(false);
     return (
-        <div className="row text-dark">
-            <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 className="h2">Dashboard</h1>
-                </div>
-                <p>To-do app Ilker</p>
-            </main>
-        </div>
+        <Container fluid>
+            <Row className="text-dark">
+                <Col md={9} className="ms-sm-auto col-lg-10 px-md-4">
+                    <div className="">
+                        <h1 >Dashboard</h1>
+                    </div>
+                    <p>To-do app Ilker</p>
+
+                    <Button onClick={() => setShowModal(true)}>Create To Do</Button>
+                    <CreateToDoModal show={showModal} handleClose={function (): void {
+                        setShowModal(false);
+                    }} />
+                </Col>
+            </Row>
+        </Container>
     );
 };
 
