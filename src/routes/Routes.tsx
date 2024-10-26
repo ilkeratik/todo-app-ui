@@ -7,20 +7,34 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Profile from "../pages/Profile";
 
+import useAuth from "../hooks/UseAuth";
+import ErrorNotLoggedIn from "../pages/error-pages/Error-NotLoggedIn";
+
 const AppRoutes = () => {
+    const { isAuthenticated } = useAuth();
+
+
     const router = createBrowserRouter(
         createRoutesFromElements(
             <>
-                <Route element={<MainLayout />}>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/profile" element={<Profile />} />
-                    <Route path="/login-via-idp" element={<Profile />} />
-                    <Route path="/logged-out" element={<Profile />} />
-                </Route>
-                <Route path="/login" element={<Login />} />
+                {isAuthenticated ? (
+                    <Route element={<MainLayout />}>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/dashboard" element={<Dashboard />} />
+                        <Route path="/profile" element={<Profile />} />
+                    </Route>
+                ) : (
+                    <Route path="/login" element={<Login />} />
+                )}
+                <Route path="/login-via-idp" element={<Profile />} />
+                <Route path="/logged-out" element={<Profile />} />
+
                 <Route element={<ErrorsLayout />}>
-                    <Route path="/*" element={<Error404 />} />
+                    {isAuthenticated ? (
+                        <Route path="/*" element={<Error404 />} />
+                    ) : (
+                        <Route path="/*" element={<ErrorNotLoggedIn />} />
+                    )}
                 </Route>
             </>
         )
