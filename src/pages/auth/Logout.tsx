@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import useAuth from '../hooks/UseAuth';
+import useAuth from '../../hooks/UseAuth';
 
 const Logout = () => {
     const { isAuthenticated, setAuth, setUser } = useAuth();

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
-import useAuth, { User } from '../hooks/UseAuth';
+import useAuth, { User } from '../../hooks/UseAuth';
 
 import { jwtDecode } from 'jwt-decode';
 
