@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import useAuth, { User } from '../hooks/UseAuth';
 
@@ -6,9 +6,7 @@ import { jwtDecode } from 'jwt-decode';
 
 const HandleIdpLogin = () => {
     const { isAuthenticated, setAuth, setUser, user } = useAuth();
-    const [loading, setLoading] = useState<boolean>(true);
     const handleLogin = async () => {
-        setLoading(true);
         const params = new URLSearchParams(window.location.search);
         const idToken = params.get('id_token');
 
