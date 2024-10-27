@@ -1,16 +1,14 @@
-import { useRef } from "react";
-import { useIntl } from "react-intl";
-import { Outlet, useLocation } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
+import useAuth from "../hooks/UseAuth";
 
-const MainLayout = () => {
-    const isFirstRun = useRef(true);
-    const location = useLocation();
-    const intl = useIntl();
-    // const { preferences } = useUserPreferences();
-
+const AuthenticatedUserLayout = () => {
+    const { user } = useAuth();
+    if (!user) {
+        return <Navigate to="/login" />;
+    }
     return <div className="d-flex px-4 py-3" id="app_root">
-        <div className="container-fluid ">
+        <div className="container-fluid">
             <div className="d-flex row content">
                 <div className="col-md-3 col-lg-2">
                     <Sidebar />
@@ -23,4 +21,4 @@ const MainLayout = () => {
         </div>
     </div>
 }
-export { MainLayout };
+export { AuthenticatedUserLayout };

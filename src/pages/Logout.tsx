@@ -2,12 +2,16 @@ import { useEffect } from 'react';
 import useAuth from '../hooks/UseAuth';
 
 const Logout = () => {
-    const { isAuthenticated, setAuth } = useAuth();
-    useEffect(() => {
+    const { isAuthenticated, setAuth, setUser } = useAuth();
+    const logout = async () => {
         if (isAuthenticated) {
-            setAuth(false)
-            window.location.reload();
+            await setAuth(false)
+            await setUser(null)
         }
+    }
+    useEffect(() => {
+        logout()
+        window.location.reload()
     }, []);
 
     return null;

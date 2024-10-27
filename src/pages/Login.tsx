@@ -5,11 +5,11 @@ const Login = () => {
     const [loginInProgress, setLoginInProgress] = useState(false);
     const redirectToCognito = () => {
         setLoginInProgress(true);
-        const clientId = '6a59l0uihoe8vg89br5li4it2r';
+        const clientId = '3m7tije7m3v73otsp9ovu29fro';
         const cognitoDomain = 'ilker.auth.us-east-1.amazoncognito.com';
         const responseType = 'code';
-        const redirectUri = 'http://localhost:5001/login-via-idp';
-        const scope = "email+openid"
+        const redirectUri = 'https://orud7ty2mgppjrjiunfbxfd2ua0qqpxa.lambda-url.us-east-1.on.aws/';
+        const scope = "openid";
         const cognitoUrl = `https://${cognitoDomain}/login?client_id=${clientId}&response_type=${responseType}&redirect_uri=${redirectUri}&scope=${scope}`;
         window.location.href = cognitoUrl;
     };
