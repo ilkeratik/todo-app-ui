@@ -28,8 +28,14 @@ const ToDoList = () => {
                 {todos.map((todo: ToDo, index) => {
                     return (
                         <ListGroup.Item key={index} action onClick={() => handleItemClick(todo)} >
-                            <Card className={"d-flex flex-row px-3 " + getBgColor(todo.priority)}>
-                                <Card.Img className='rounded' variant="left" src={todo.image} alt={todo.title} style={{ width: '150px', height: 'auto' }} />
+                            <Card className={"d-flex flex-row px-3 py-2 " + getBgColor(todo.priority)}>
+                                <Card.Img
+                                    className='rounded-circle'
+                                    variant="left"
+                                    src={todo.image || 'https://w7.pngwing.com/pngs/491/126/png-transparent-questionnaire-test-exam-to-do-list-notes-icon-thumbnail.png'}
+                                    alt={todo.title}
+                                    style={{ width: '150px', height: '150px' }}
+                                />
                                 <Card.Body>
                                     <Card.Title>{todo.title}</Card.Title>
                                     <Card.Text>{todo.description}</Card.Text>
@@ -43,15 +49,15 @@ const ToDoList = () => {
                                                 switch (todo.status) {
                                                     case 'to-do':
                                                         return (
-                                                            <i className="bi bi-circle text-secondary" style={{ fontSize: '2.5rem' }}></i>
+                                                            <i className="bi bi-hourglass text-secondary" style={{ fontSize: '2.1rem' }}></i>
                                                         );
                                                     case 'in-progress':
                                                         return (
-                                                            <i className="bi bi-arrow-repeat text-warning" style={{ fontSize: '2.5rem' }}></i>
+                                                            <i className="bi bi-arrow-repeat text-warning" style={{ fontSize: '2.1rem' }}></i>
                                                         );
                                                     case 'done':
                                                         return (
-                                                            <i className="bi bi-check-circle-fill" style={{ fontSize: '2.5rem' }}></i>
+                                                            <i className="bi bi-check2-square" style={{ fontSize: '2.1rem' }}></i>
                                                         );
                                                     default:
                                                         return null;
