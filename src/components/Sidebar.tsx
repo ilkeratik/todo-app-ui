@@ -6,7 +6,7 @@ const Sidebar = () => {
     const navigate = useNavigate();
 
     return (
-        <nav id="sidebarMenu" className="d-md-block bg-light sidebar">
+        <nav id="sidebarMenu" className="d-md-block sidebar">
             <div className="position-sticky">
                 <ul className="nav flex-column">
                     <li className="nav-item">

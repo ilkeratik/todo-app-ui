@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { createBrowserRouter, createRoutesFromElements, Navigate, Route, RouterProvider } from "react-router-dom";
 import useAuth from "../hooks/UseAuth";
 import { AuthenticatedUserLayout } from "../layout/AuthenticatedUserLayout";
-import Dashboard from "../pages/Dashboard";
+import HandleIdpLogin from "../pages/auth/HandleIdpLogin";
+import Login from "../pages/auth/Login";
+import Logout from "../pages/auth/Logout";
+import DashboardContextWrapper from "../pages/dashboard/DashboardContextWrapper";
 import { Error404 } from "../pages/error-pages/Error-404";
 import ErrorNotLoggedIn from "../pages/error-pages/Error-NotLoggedIn";
 import { ErrorsLayout } from "../pages/error-pages/ErrorLayout";
-import HandleIdpLogin from "../pages/HandleIdpLogin";
 import Home from "../pages/Home";
-import Login from "../pages/Login";
-import Logout from "../pages/Logout";
 import Profile from "../pages/Profile";
 
 const AppRoutes = () => {
@@ -24,7 +24,7 @@ const AppRoutes = () => {
                 <>
                     <Route element={<AuthenticatedUserLayout />}>
                         <Route path="/" element={<Home />} />
-                        <Route path="/dashboard" element={<Dashboard />} />
+                        <Route path="/dashboard" element={<DashboardContextWrapper />} />
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/logout" element={<Logout />} />
                         <Route path="/logged-out" element={<Profile />} />

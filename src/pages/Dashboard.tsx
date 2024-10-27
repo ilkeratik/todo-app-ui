@@ -1,23 +1,22 @@
-import { useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
-import CreateToDoModal from "./CreateToDoModal";
+import { useToDo } from "../modules/todo-context/ToDoContext";
+import ToDoList from "./todo/ToDoList";
 
 const Dashboard = () => {
 
-    const [showModal, setShowModal] = useState(false);
+    const { setShowModal, setCurrentAction } = useToDo();
     return (
         <Container fluid>
             <Row className="text-dark">
-                <Col md={9} className="ms-sm-auto col-lg-10 px-md-4">
+                <Col>
                     <div className="">
-                        <h1 >Dashboard</h1>
+                        <h3>To Do</h3>
                     </div>
-                    <p>To-do app Ilker</p>
-
-                    <Button onClick={() => setShowModal(true)}>Create To Do</Button>
-                    <CreateToDoModal show={showModal} handleClose={function (): void {
-                        setShowModal(false);
-                    }} />
+                    <ToDoList />
+                    <Button onClick={() => {
+                        setCurrentAction("create");
+                        setShowModal(true)
+                    }}>Create New To Do</Button>
                 </Col>
             </Row>
         </Container>
