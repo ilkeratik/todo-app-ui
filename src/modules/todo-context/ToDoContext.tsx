@@ -8,6 +8,8 @@ interface ToDo {
     image: string;
     priority: string;
     status: 'to-do' | 'in-progress' | 'done';
+    category: string;
+    deadline: string;
 }
 
 interface TodoContextType {

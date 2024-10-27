@@ -3,6 +3,7 @@ import { ToDo, useToDo } from '../../modules/todo-context/ToDoContext';
 import { Card, ListGroup } from 'react-bootstrap';
 
 const ToDoList = () => {
+    const { addToDo } = useToDo();
     const getBgColor = (priority: string) => {
         switch (priority.toLowerCase()) {
             case 'high':
@@ -15,6 +16,25 @@ const ToDoList = () => {
                 return '';
         }
     }
+    const handleStatusChange = (e: React.MouseEvent, todo: ToDo) => {
+        e.stopPropagation();
+        let newStatus: 'to-do' | 'in-progress' | 'done';
+        switch (todo.status) {
+            case 'to-do':
+                newStatus = 'in-progress';
+                break;
+            case 'in-progress':
+                newStatus = 'done';
+                break;
+            case 'done':
+                newStatus = 'to-do';
+                break;
+            default:
+                newStatus = 'to-do';
+        }
+        addToDo({ ...todo, status: newStatus });
+    }
+
     const { todos, setCurrentToDo, setShowModal, setCurrentAction } = useToDo();
     function handleItemClick(todo: ToDo): void {
         setCurrentToDo(todo);
@@ -40,9 +60,10 @@ const ToDoList = () => {
                                     <Card.Title>{todo.title}</Card.Title>
                                     <Card.Text>{todo.description}</Card.Text>
                                     <Card.Text>Priority: {todo.priority}</Card.Text>
+                                    <Card.Text>Deadline: {todo.deadline ?? 'Not set'}</Card.Text>
                                 </Card.Body>
 
-                                <div className="d-flex align-items-center">
+                                <div className="d-flex align-items-center" onClick={(e) => handleStatusChange(e, todo)}>
                                     <div className="me-3">
                                         <Card.Text className="text-success bg-light px-3 rounded">
                                             {(() => {

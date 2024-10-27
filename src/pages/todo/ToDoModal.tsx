@@ -88,6 +88,18 @@ const ToDoModal = ({ show, handleClose }: { show: boolean; handleClose: () => vo
                             />
                         ))}
                     </Form.Group>
+                    <Form.Group className='my-4' controlId="formDeadline">
+                        <Form.Label className='mb-0'>Deadline</Form.Label>
+                        <Form.Control
+                            type="date"
+                            value={currentToDo?.deadline || ''}
+                            onChange={(e) => {
+                                if (currentToDo) {
+                                    setCurrentToDo({ ...currentToDo, deadline: e.target.value });
+                                }
+                            }}
+                        />
+                    </Form.Group>
                     {currentAction === 'update' &&
                         <Form.Group className='my-4' controlId="formStatus">
                             <Form.Label className='mb-0 d-block pb-2'>Status</Form.Label>
