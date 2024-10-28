@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import useAuth from '../hooks/UseAuth';
+import { useAuth } from '../hooks/UseAuth';
 
 const Sidebar = () => {
-    const { isAuthenticated } = useAuth();
+    const { user } = useAuth();
     const navigate = useNavigate();
 
     return (
@@ -24,7 +24,7 @@ const Sidebar = () => {
                             Profile
                         </button>
                     </li>
-                    {isAuthenticated ?
+                    {user !== null ?
                         (
                             <li className="nav-item">
                                 <button className="nav-link" onClick={() => navigate('/logout')}>

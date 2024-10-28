@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { createBrowserRouter, createRoutesFromElements, Navigate, Route, RouterProvider } from "react-router-dom";
-import useAuth from "../hooks/UseAuth";
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from "react-router-dom";
+import { useAuth } from "../hooks/UseAuth";
 import { AuthenticatedUserLayout } from "../layout/AuthenticatedUserLayout";
-import HandleIdpLogin from "../pages/auth/HandleIdpLogin";
+import { HandleIdpCallback } from "../pages/auth/HandleIdpCallBack";
 import Login from "../pages/auth/Login";
-import Logout from "../pages/auth/Logout";
+import { Logout } from "../pages/auth/Logout";
 import DashboardContextWrapper from "../pages/dashboard/DashboardContextWrapper";
 import { Error404 } from "../pages/error-pages/Error-404";
 import ErrorNotLoggedIn from "../pages/error-pages/Error-NotLoggedIn";
@@ -13,11 +13,11 @@ import Home from "../pages/Home";
 import Profile from "../pages/Profile";
 
 const AppRoutes = () => {
-    const { isAuthenticated, loading, setAuth, user } = useAuth();
+    const { loading, user } = useAuth();
     const [router, setRouter] = useState<any>(null);
 
     useEffect(() => {
-        console.log(`isAuthenticated changed: ${isAuthenticated}`);
+        console.log(`user changed: ${user}`);
 
         const newRouter = createBrowserRouter(
             createRoutesFromElements(
@@ -26,19 +26,21 @@ const AppRoutes = () => {
                         <Route path="/" element={<Home />} />
                         <Route path="/dashboard" element={<DashboardContextWrapper />} />
                         <Route path="/profile" element={<Profile />} />
+
                         <Route path="/logout" element={<Logout />} />
-                        <Route path="/logged-out" element={<Profile />} />
+                        {/* <Route path="/logged-out" element={<Profile />} /> */}
                     </Route>
-                    <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/" />} />
-                    <Route path="/login-via-idp" element={<HandleIdpLogin />} />
+
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/login-callback" element={<HandleIdpCallback />} />
                     <Route element={<ErrorsLayout />}>
-                        <Route path="/*" element={isAuthenticated ? <Error404 /> : <ErrorNotLoggedIn />} />
+                        <Route path="/*" element={user ? <Error404 /> : <ErrorNotLoggedIn />} />
                     </Route>
                 </>
             )
         );
         setRouter(newRouter);
-    }, [isAuthenticated, setAuth, user]);
+    }, [user]);
 
     if (loading) {
         return <div>Loading...</div>;

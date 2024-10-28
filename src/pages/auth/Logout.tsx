@@ -1,20 +1,15 @@
 import { useEffect } from 'react';
-import useAuth from '../../hooks/UseAuth';
+import { useAuth } from '../../hooks/UseAuth';
 
 const Logout = () => {
-    const { isAuthenticated, setAuth, setUser } = useAuth();
-    const logout = async () => {
-        if (isAuthenticated) {
-            await setAuth(false)
-            await setUser(null)
-        }
-    }
+    const { auth, setAuth } = useAuth();
     useEffect(() => {
-        logout()
-        window.location.reload()
+        if (auth !== null) {
+            setAuth(null)
+        }
     }, []);
 
-    return null;
+    return <>Logging out</>;
 };
 
-export default Logout;
+export { Logout };

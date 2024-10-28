@@ -1,4 +1,7 @@
-import { useCallback, useState } from 'react';
+import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+
 interface User {
     at_hash: string;
     aud: string;
@@ -15,38 +18,58 @@ interface User {
     sub: string;
     token_use: string;
 }
-const useAuth = () => {
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
-        const storedAuth = localStorage.getItem('isAuthenticated');
-        return storedAuth ? JSON.parse(storedAuth) : false;
-    });
 
-    const [user, _setUser] = useState<User | null>(() => {
-        const storedAuth = localStorage.getItem('user');
-        return storedAuth ? JSON.parse(storedAuth) : false;
+interface AuthContextType {
+    auth: string | null;
+    setAuth: (authz: string | null) => void;
+    loading: boolean;
+    user: User | null;
+}
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
+    const [auth, _setAuth] = useState<string | null>(() => {
+        const storedAuth = Cookies.get('auth');
+        return storedAuth ?? null;
     });
+    const [user, _setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
 
-    const setAuth = useCallback((status: boolean) => {
-        setIsAuthenticated(status);
-        localStorage.setItem('isAuthenticated', JSON.stringify(status));
-    }, []);
-
-    const setUser = useCallback((user: User | null) => {
-        _setUser(user);
-        if (user == null) {
-            setAuth(false);
-            localStorage.removeItem('user');
+    useEffect(() => {
+        console.log('ththtere')
+        if (auth !== null) {
+            console.log('here')
+            const decodedToken = jwtDecode(auth);
+            _setUser(decodedToken as User);
         } else {
-            setAuth(true);
-            localStorage.setItem('user', JSON.stringify(user));
+            _setUser(null);
         }
-    }, [setAuth]);
+    }, [auth]);
 
-    return {
-        isAuthenticated, loading, setAuth, user, setUser
+    const setAuth = (authz: string | null) => {
+        console.log('heloo')
+        _setAuth(authz);
+        if (authz !== null) {
+            Cookies.set('auth', authz, { secure: true, sameSite: 'Strict' });
+        } else {
+            Cookies.remove('auth')
+        }
     };
+
+    return (
+        <AuthContext.Provider value={{ auth, setAuth, loading, user }}>
+            {children}
+        </AuthContext.Provider>
+    );
 };
 
-export default useAuth;
+export const useAuth = (): AuthContextType => {
+    const context = useContext(AuthContext);
+    if (context === undefined) {
+        throw new Error('useAuth must be used within an AuthProvider');
+    }
+    return context;
+};
+
 export type { User };

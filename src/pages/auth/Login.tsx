@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Button, Row } from 'react-bootstrap';
+import { useAuth } from '../../hooks/UseAuth';
 const Login = () => {
-
+    const { user } = useAuth();
     const [loginInProgress, setLoginInProgress] = useState(false);
     const redirectToCognito = () => {
         setLoginInProgress(true);
-        const clientId = '3m7tije7m3v73otsp9ovu29fro';
-        const cognitoDomain = 'ilker.auth.us-east-1.amazoncognito.com';
+        const clientId = 'qtsg0jikodup7m85ouv0uga1o';
+        const cognitoDomain = 'es-auth-lab.auth.us-east-1.amazoncognito.com';
         const responseType = 'code';
-        const redirectUri = 'https://orud7ty2mgppjrjiunfbxfd2ua0qqpxa.lambda-url.us-east-1.on.aws/';
+        const redirectUri = 'http://localhost:5001/login-callback';
         const scope = "openid";
         const cognitoUrl = `https://${cognitoDomain}/login?client_id=${clientId}&response_type=${responseType}&redirect_uri=${redirectUri}&scope=${scope}`;
         window.location.href = cognitoUrl;
@@ -17,6 +18,10 @@ const Login = () => {
     useEffect(() => {
     }, []);
 
+    if (user) {
+        console.log('login', user)
+        // return <Navigate to="/" />;
+    }
     return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
             {!loginInProgress ?

@@ -1,10 +1,10 @@
 import { Navigate, Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
-import useAuth from "../hooks/UseAuth";
+import { useAuth } from "../hooks/UseAuth";
 
 const AuthenticatedUserLayout = () => {
     const { user } = useAuth();
-    if (!user) {
+    if (user === null) {
         return <Navigate to="/login" />;
     }
     return <div className="d-flex px-4 py-3" id="app_root">
