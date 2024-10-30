@@ -11,16 +11,14 @@ const HandleIdpCallback = () => {
         const queryParams = new URLSearchParams(location.search);
         const authorizationCode = queryParams.get('code');
         if (authorizationCode) {
-            fetch(`https://orud7ty2mgppjrjiunfbxfd2ua0qqpxa.lambda-url.us-east-1.on.aws/?code=${authorizationCode}`)
+            const currentDomain = window.location.origin;
+            let redirectUri = `${currentDomain}/login-callback`;
+            fetch(`https://orud7ty2mgppjrjiunfbxfd2ua0qqpxa.lambda-url.us-east-1.on.aws/?code=${authorizationCode}&url=${redirectUri}`)
                 .then(response => {
-                    response.headers.forEach((value, key) => {
-                        console.log(`Response Header: ${key} = ${value}`);
-                    });
                     return response.json();
                 })
                 .then(async data => {
                     if (data.idToken) {
-                        console.log('setting at', data.idToken)
                         await setAuth(data.idToken);
                     };
                     console.log('Response from API:', data);
@@ -28,9 +26,6 @@ const HandleIdpCallback = () => {
                 .catch(error => {
                     console.error('Error fetching data:', error);
                 });
-        }
-        if (authorizationCode) {
-            console.log('Authorization Code:', authorizationCode);
         } else {
             console.log('Authorization Code not found');
         }
