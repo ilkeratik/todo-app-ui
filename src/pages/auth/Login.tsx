@@ -9,7 +9,7 @@ const Login = () => {
         const clientId = 'qtsg0jikodup7m85ouv0uga1o';
         const cognitoDomain = 'es-auth-lab.auth.us-east-1.amazoncognito.com';
         const responseType = 'code';
-        const redirectUri = 'https://ilkeratik.github.io/login-callback';
+        const redirectUri = 'https://ilkeratik.github.io/todo-app-ui/login-callback';
         const scope = "openid";
         const cognitoUrl = `https://${cognitoDomain}/login?client_id=${clientId}&response_type=${responseType}&redirect_uri=${redirectUri}&scope=${scope}`;
         window.location.href = cognitoUrl;
