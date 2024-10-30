@@ -9,9 +9,6 @@ const Dashboard = () => {
         <Container fluid>
             <Row className="text-dark">
                 <Col>
-                    <div className="">
-                        <h3>To Do</h3>
-                    </div>
                     <ToDoList />
                     <Button onClick={() => {
                         setCurrentAction("create");

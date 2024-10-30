@@ -10,6 +10,8 @@ interface ToDo {
     status: 'to-do' | 'in-progress' | 'done';
     category: string;
     deadline: string;
+    createdAt: string;
+    updatedAt: string;
 }
 
 interface TodoContextType {
@@ -36,9 +38,17 @@ const ToDoProvider = ({ children }: { children: ReactNode }) => {
     }, []);
 
     const addToDo = (newTodo: ToDo) => {
-        const updatedTodos = todos.some(todo => todo.id === newTodo.id)
-            ? todos.map(todo => todo.id === newTodo.id ? newTodo : todo)
-            : [...todos, newTodo];
+        const timestamp = new Date().toISOString();
+        const newTodoWithTimestamps = {
+            ...newTodo,
+            createdAt: newTodo.createdAt || timestamp,
+            updatedAt: timestamp,
+        };
+
+        const updatedTodos = todos.some(todo => todo.id === newTodoWithTimestamps.id)
+            ? todos.map(todo => todo.id === newTodoWithTimestamps.id ? newTodoWithTimestamps : todo)
+            : [...todos, newTodoWithTimestamps];
+
         setToDos(updatedTodos);
         localStorage.setItem('todos', JSON.stringify(updatedTodos));
     };
