@@ -41,3 +41,4 @@ interface ErrorResponse {
     message: string;
     path: string;
 }
+export type { CreateToDoRequest, CreateToDoResponse, ErrorResponse, ToDoDTO, UpdateToDoRequest };

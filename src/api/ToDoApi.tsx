@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
+import { CreateToDoRequest, CreateToDoResponse, ErrorResponse, ToDoDTO, UpdateToDoRequest } from './Models';
 
 class ToDoApiClient {
     private axiosInstance: AxiosInstance;
@@ -71,8 +72,10 @@ const handleApiError = (error: AxiosError<ErrorResponse>): never => {
     }
     throw error;
 };
-// Usage example
 const apiClient = new ToDoApiClient('http://your-api-base-url');
+
+export { apiClient, ToDoApiClient };
+
 async function createNewToDo() {
     try {
         const newToDo: CreateToDoRequest = {
