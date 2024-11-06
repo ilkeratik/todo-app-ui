@@ -96,8 +96,8 @@ const ToDoList = () => {
                 <Col lg='3' className='my-3'>
                     <label htmlFor="sortOption" className="form-label">Sort by</label>
                     <select id="sortOption" className="form-select" onChange={(e) => setSortOption(e.target.value)}>
-                        <option value="creationDateAsc">Creation Date, Newest First</option>
-                        <option value="creationDateDesc">Creation Date, Oldest First</option>
+                        <option value="creationDateAsc">Creation Date, Oldest First</option>
+                        <option value="creationDateDesc">Creation Date, Newest First</option>
                         <option value="deadline">Deadline</option>
                         <option value="priority">Priority</option>
                     </select>
