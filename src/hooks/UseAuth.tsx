@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         console.log('heloo')
         _setAuth(authz);
         if (authz !== null) {
-            Cookies.set('auth', authz, { secure: true, sameSite: 'Strict' });
+            Cookies.set('auth', authz, { secure: true, sameSite: 'Strict', httpOnly: true });
         } else {
             Cookies.remove('auth')
         }
