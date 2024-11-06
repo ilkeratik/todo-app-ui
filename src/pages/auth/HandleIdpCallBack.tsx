@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Navigate, useLocation } from "react-router-dom";
+import { API_URL } from "../../api/ToDoApi";
 import { useAuth } from "../../hooks/UseAuth";
 
 const HandleIdpCallback = () => {
@@ -13,7 +14,7 @@ const HandleIdpCallback = () => {
         if (authorizationCode) {
             const currentDomain = window.location.origin;
             let redirectUri = `${currentDomain}/login-callback`;
-            fetch(`https://ubmlbv19sb.execute-api.us-east-1.amazonaws.com/test/api/v1/auth/token`, {
+            fetch(`${API_URL}/api/v1/auth/token`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
