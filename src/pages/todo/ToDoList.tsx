@@ -146,17 +146,17 @@ const ToDoList = () => {
                 >
                     <ListGroup>
                         <ListGroup.Item key='header' className='bg-primary text-white'><Row>
-                            <Col sm='10'>
+                            <Col xs='10'>
                                 <span> To Do </span>
                             </Col>
-                            <Col sm='2'>
+                            <Col xs='2'>
                                 <Button variant="info" size='sm'
                                     onClick={() => {
                                         const listItems = document.querySelectorAll(`[data-column='TO_DO'] .real-list-item`);
                                         listItems.forEach(item => item.classList.toggle('collapsed'));
                                     }}
                                 >
-                                    <i className="bi bi-chevron-down"></i>
+                                    <i className={`bi ${document.querySelector(`[data-column='TO_DO'] .real-list-item.collapsed`) ? 'bi-chevron-up' : 'bi-chevron-down'}`}></i>
                                 </Button>
                             </Col>
                         </Row></ListGroup.Item>
@@ -175,17 +175,17 @@ const ToDoList = () => {
                     <ListGroup >
                         <ListGroup.Item key='header' className='bg-primary text-white'>
                             <Row>
-                                <Col sm='10'>
+                                <Col xs='10'>
                                     <span> In Progress </span>
                                 </Col>
-                                <Col sm='2'>
+                                <Col xs='2'>
                                     <Button variant="info" size='sm'
                                         onClick={() => {
                                             const listItems = document.querySelectorAll(`[data-column='IN_PROGRESS'] .real-list-item`);
                                             listItems.forEach(item => item.classList.toggle('collapsed'));
                                         }}
                                     >
-                                        <i className="bi bi-chevron-down"></i>
+                                        <i className={`bi ${document.querySelector(`[data-column='IN_PROGRESS'] .real-list-item.collapsed`) ? 'bi-chevron-up' : 'bi-chevron-down'}`}></i>
                                     </Button>
                                 </Col>
                             </Row>
@@ -204,17 +204,17 @@ const ToDoList = () => {
                     <ListGroup >
                         <ListGroup.Item key='header' className='bg-primary text-white'>
                             <Row>
-                                <Col sm='10'>
+                                <Col xs='10'>
                                     <span> Done </span>
                                 </Col>
-                                <Col sm='2'>
+                                <Col xs='2'>
                                     <Button variant="info" size='sm'
                                         onClick={() => {
                                             const listItems = document.querySelectorAll(`[data-column='DONE'] .real-list-item`);
                                             listItems.forEach(item => item.classList.toggle('collapsed'));
                                         }}
                                     >
-                                        <i className="bi bi-chevron-down"></i>
+                                        <i className={`bi ${document.querySelector(`[data-column='DONE'] .real-list-item.collapsed`) ? 'bi-chevron-up' : 'bi-chevron-down'}`}></i>
                                     </Button>
                                 </Col>
                             </Row>
