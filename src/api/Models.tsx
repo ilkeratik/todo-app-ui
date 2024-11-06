@@ -23,6 +23,7 @@ interface CreateToDoResponse {
 }
 
 interface ToDoDTO {
+    id: number;
     title: string;
     description: string;
     image: string | null;

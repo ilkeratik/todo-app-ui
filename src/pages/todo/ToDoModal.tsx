@@ -1,25 +1,29 @@
 import React, { useEffect } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
-import { v4 as uuidv4 } from 'uuid';
 import { ToDo, useToDo } from '../../modules/todo-context/ToDoContext';
 
 const ToDoModal = ({ show, handleClose }: { show: boolean; handleClose: () => void }) => {
-    const { addToDo, currentToDo, setCurrentToDo, currentAction } = useToDo();
+    const { addToDo, updateToDo, deleteToDo, currentToDo, setCurrentToDo, currentAction } = useToDo();
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (!currentToDo) return;
-        if (currentToDo.id === '') {
-            currentToDo.id = uuidv4();
+        if (currentToDo !== null && currentAction === 'create') {
+            addToDo(currentToDo);
+        } else if (currentToDo !== null && currentAction === 'update') {
+            updateToDo(currentToDo)
         }
-        addToDo(currentToDo);
         handleClose();
     };
 
+    const handleDelete = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (currentToDo !== null)
+            deleteToDo(currentToDo);
+        handleClose();
+    }
     useEffect(() => {
         if (!currentToDo || currentAction === 'create') {
-            setCurrentToDo({ id: '', title: '', description: '', image: '', priority: '', status: 'to-do' } as ToDo);
+            setCurrentToDo({ title: '', description: '', image: '', priority: '', status: 'TO_DO' } as ToDo);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentAction]);
 
     return (
@@ -50,6 +54,20 @@ const ToDoModal = ({ show, handleClose }: { show: boolean; handleClose: () => vo
                             onChange={(e) => {
                                 if (currentToDo) {
                                     setCurrentToDo({ ...currentToDo, description: e.target.value });
+                                }
+                            }}
+                        />
+                    </Form.Group>
+
+                    <Form.Group className='mt-2 mb-4' controlId="formTitle">
+                        <Form.Label className='mb-0'>Category</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Enter title"
+                            value={currentToDo?.category || ''}
+                            onChange={(e) => {
+                                if (currentToDo) {
+                                    setCurrentToDo({ ...currentToDo, category: e.target.value });
                                 }
                             }}
                         />
@@ -92,10 +110,10 @@ const ToDoModal = ({ show, handleClose }: { show: boolean; handleClose: () => vo
                         <Form.Label className='mb-0'>Deadline</Form.Label>
                         <Form.Control
                             type="date"
-                            value={currentToDo?.deadline || ''}
+                            value={currentToDo?.deadline ? new Date(currentToDo.deadline).toISOString().split('T')[0] : ''}
                             onChange={(e) => {
                                 if (currentToDo) {
-                                    setCurrentToDo({ ...currentToDo, deadline: e.target.value });
+                                    setCurrentToDo({ ...currentToDo, deadline: new Date(e.target.value).toISOString() });
                                 }
                             }}
                         />
@@ -103,7 +121,7 @@ const ToDoModal = ({ show, handleClose }: { show: boolean; handleClose: () => vo
                     {currentAction === 'update' &&
                         <Form.Group className='my-4' controlId="formStatus">
                             <Form.Label className='mb-0 d-block pb-2'>Status</Form.Label>
-                            {['to-do', 'in-progress', 'done'].map((status) => (
+                            {['TO_DO', 'IN_PROGRESS', 'DONE'].map((status) => (
                                 <Form.Check
                                     key={status}
                                     type="radio"
@@ -113,7 +131,7 @@ const ToDoModal = ({ show, handleClose }: { show: boolean; handleClose: () => vo
                                     checked={(currentToDo ?? {}).status === status}
                                     onChange={(e) => {
                                         if (currentToDo) {
-                                            setCurrentToDo({ ...currentToDo, status: e.target.value as 'to-do' | 'in-progress' | 'done' });
+                                            setCurrentToDo({ ...currentToDo, status: e.target.value as 'TO_DO' | 'IN_PROGRESS' | 'DONE' });
                                         }
                                     }}
                                     inline
@@ -122,16 +140,21 @@ const ToDoModal = ({ show, handleClose }: { show: boolean; handleClose: () => vo
                         </Form.Group>
                     }
                     <div className="d-flex justify-content-center">
-                        <Button className='my-2 px-5 me-2' variant="primary" type="submit">
+                        <Button className='my-2 me-2' variant="primary" type="submit">
                             {currentAction ? currentAction.charAt(0).toUpperCase() + currentAction.slice(1) : 'Submit'}
                         </Button>
-                        <Button className='my-2 px-5' variant="secondary" onClick={handleClose}>
+                        {currentAction !== 'create' &&
+                            < Button className='my-2 ms-5 me-2' variant="danger" size='sm' onClick={handleDelete}>
+                                Delete
+                            </Button>
+                        }
+                        <Button className='my-2' variant="secondary" size='sm' onClick={handleClose}>
                             Close
                         </Button>
                     </div>
                 </Form>
             </Modal.Body>
-        </Modal>
+        </Modal >
     );
 };
 

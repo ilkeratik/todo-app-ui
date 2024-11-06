@@ -15,6 +15,10 @@ class ToDoApiClient {
         this.axiosInstance.interceptors.response.use(
             (response) => response,
             (error: AxiosError<ErrorResponse>) => {
+                if (error.response?.status === 401)
+                    window.location.href = '/logout';
+                else if (error.response?.status !== 200)
+                    window.location.reload()
                 return Promise.reject(handleApiError(error));
             }
         );
@@ -45,6 +49,7 @@ class ToDoApiClient {
     }
 
     async deleteToDo(id: number): Promise<void> {
+        console.log('egrerg')
         await this.axiosInstance.delete(`/${id}`);
     }
 }
@@ -72,7 +77,7 @@ const handleApiError = (error: AxiosError<ErrorResponse>): never => {
     }
     throw error;
 };
-const apiClient = new ToDoApiClient('http://your-api-base-url');
+const apiClient = new ToDoApiClient('https://ubmlbv19sb.execute-api.us-east-1.amazonaws.com/test');
 
 export { apiClient, ToDoApiClient };
 
