@@ -77,7 +77,7 @@ const handleApiError = (error: AxiosError<ErrorResponse>): never => {
     }
     throw error;
 };
-const apiClient = new ToDoApiClient('https://ubmlbv19sb.execute-api.us-east-1.amazonaws.com/test');
+const apiClient = new ToDoApiClient('https://ubmlbv19sb.execute-api.us-east-1.amazonaws.com/prod-vercel-ui-app');
 
 export { apiClient, ToDoApiClient };
 
