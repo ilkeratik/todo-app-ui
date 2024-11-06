@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { apiClient } from '../api/ToDoApi';
 
 interface User {
     at_hash: string;
@@ -37,11 +38,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
-        console.log('ththtere')
         if (auth !== null) {
-            console.log('here')
             const decodedToken = jwtDecode(auth);
+
+            console.log('decoded:', decodedToken)
             _setUser(decodedToken as User);
+            apiClient.setAuthHeader(auth);
         } else {
             _setUser(null);
         }

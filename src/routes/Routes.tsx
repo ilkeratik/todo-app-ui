@@ -17,8 +17,6 @@ const AppRoutes = () => {
     const [router, setRouter] = useState<any>(null);
 
     useEffect(() => {
-        console.log(`user changed: ${user}`);
-
         const newRouter = createBrowserRouter(
             createRoutesFromElements(
                 <>

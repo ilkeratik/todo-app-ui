@@ -6,14 +6,9 @@ const Sidebar = () => {
     const navigate = useNavigate();
 
     return (
-        <nav id="sidebarMenu" className="d-md-block sidebar">
+        <nav id="sidebarMenu" className="d-md-block sidebar pe-5 bg-light rounded">
             <div className="position-sticky">
-                <ul className="nav flex-column">
-                    <li className="nav-item">
-                        <button className="nav-link active" aria-current="page" onClick={() => navigate('/')}>
-                            Home
-                        </button>
-                    </li>
+                <ul className="nav flex-column text-decoration-underline">
                     <li className="nav-item">
                         <button className="nav-link" onClick={() => navigate('/dashboard')}>
                             Dashboard
