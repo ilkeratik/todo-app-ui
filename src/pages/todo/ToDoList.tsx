@@ -25,7 +25,6 @@ const ToDoList = () => {
         updateToDo(todo);
     }
     const setStatusOfToDo = async (todo: ToDo, newStatus: 'TO_DO' | 'IN_PROGRESS' | 'DONE') => {
-        console.log(`Setting status of ${todo.title} to ${newStatus}`);
         todo.status = newStatus;
         await updateToDo(todo);
     }
@@ -42,7 +41,7 @@ const ToDoList = () => {
     const [priorityFilter, setPriorityFilter] = useState<string>('all');
     const [categoryFilter, setCategoryFilter] = useState<string>('all');
     const [sortOption, setSortOption] = useState<string>('creationDate');
-
+    const [collapsedList, setCollapsedList] = useState<boolean[]>([false, false, false]);
     useEffect(() => {
         let filteredTodos = unfilteredTodo;
         if (priorityFilter !== '' && priorityFilter !== 'all') {
@@ -92,7 +91,7 @@ const ToDoList = () => {
     }
     return (
         <div>
-            <Row className='mb-3'>
+            <Row className='filter-sort mb-2'>
                 <Col lg='3' className='my-3'>
                     <label htmlFor="sortOption" className="form-label">Sort by</label>
                     <select id="sortOption" className="form-select" onChange={(e) => setSortOption(e.target.value)}>
@@ -116,7 +115,7 @@ const ToDoList = () => {
                 <Col lg='3'>
                     <div className='my-3'>
                         <label htmlFor="categoryFilter" className="form-label">Filter by Category</label>
-                        <select id="categoryFilter" className="form-select" onChange={(e) => { console.log(222, e.target.value); setCategoryFilter(e.target.value) }}>
+                        <select id="categoryFilter" className="form-select" onChange={(e) => { setCategoryFilter(e.target.value) }}>
                             <option value="all">All</option>
                             {Array.from(new Set(unfilteredTodo.map(todo => todo.category))).map((category, index) => (
                                 category !== null && category.length > 0 && <option key={index} value={category}>{category}</option>
@@ -154,9 +153,10 @@ const ToDoList = () => {
                                     onClick={() => {
                                         const listItems = document.querySelectorAll(`[data-column='TO_DO'] .real-list-item`);
                                         listItems.forEach(item => item.classList.toggle('collapsed'));
+                                        setCollapsedList([!collapsedList[0], collapsedList[1], collapsedList[2]]);
                                     }}
                                 >
-                                    <i className={`bi ${document.querySelector(`[data-column='TO_DO'] .real-list-item.collapsed`) ? 'bi-chevron-up' : 'bi-chevron-down'}`}></i>
+                                    <i className={`bi ${collapsedList[0] ? 'bi-chevron-up' : 'bi-chevron-down'}`}></i>
                                 </Button>
                             </Col>
                         </Row></ListGroup.Item>
@@ -183,9 +183,10 @@ const ToDoList = () => {
                                         onClick={() => {
                                             const listItems = document.querySelectorAll(`[data-column='IN_PROGRESS'] .real-list-item`);
                                             listItems.forEach(item => item.classList.toggle('collapsed'));
+                                            setCollapsedList([collapsedList[0], !collapsedList[1], collapsedList[2]]);
                                         }}
                                     >
-                                        <i className={`bi ${document.querySelector(`[data-column='IN_PROGRESS'] .real-list-item.collapsed`) ? 'bi-chevron-up' : 'bi-chevron-down'}`}></i>
+                                        <i className={`bi ${collapsedList[1] ? 'bi-chevron-up' : 'bi-chevron-down'}`}></i>
                                     </Button>
                                 </Col>
                             </Row>
@@ -212,9 +213,10 @@ const ToDoList = () => {
                                         onClick={() => {
                                             const listItems = document.querySelectorAll(`[data-column='DONE'] .real-list-item`);
                                             listItems.forEach(item => item.classList.toggle('collapsed'));
+                                            setCollapsedList([collapsedList[0], collapsedList[1], !collapsedList[2]]);
                                         }}
                                     >
-                                        <i className={`bi ${document.querySelector(`[data-column='DONE'] .real-list-item.collapsed`) ? 'bi-chevron-up' : 'bi-chevron-down'}`}></i>
+                                        <i className={`bi ${collapsedList[2] ? 'bi-chevron-up' : 'bi-chevron-down'}`}></i>
                                     </Button>
                                 </Col>
                             </Row>

@@ -7,7 +7,7 @@ const Dashboard = () => {
     const { setShowModal, setCurrentAction } = useToDo();
     return (
         <Container fluid>
-            <h2 className="text-dark border-bottom pb-2">Dashboard</h2>
+            <h2 className="text-dark border-bottom pb-2 text-center">Dashboard</h2>
             <Row className="text-dark">
                 <Col>
                     <ToDoList />
@@ -15,8 +15,8 @@ const Dashboard = () => {
 
             </Row>
             <Button
-                className="bg-success px-4 py-3"
-                style={{ fontWeight: 'bold', position: 'fixed', bottom: '20px', right: '48%', borderRadius: '1rem' }}
+                className="bg-success py-3 px-5"
+                style={{ fontWeight: 'bold', position: 'fixed', bottom: '20px', right: '40%', borderRadius: '1.25rem' }}
                 onClick={() => {
                     setCurrentAction("create");
                     setShowModal(true);

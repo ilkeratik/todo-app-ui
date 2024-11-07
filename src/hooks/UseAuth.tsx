@@ -40,8 +40,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         if (auth !== null) {
             const decodedToken = jwtDecode(auth);
-
-            console.log('decoded:', decodedToken)
             _setUser(decodedToken as User);
             apiClient.setAuthHeader(auth);
         } else {
@@ -50,10 +48,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }, [auth]);
 
     const setAuth = (authz: string | null) => {
-        console.log('heloo')
         _setAuth(authz);
         if (authz !== null) {
-            Cookies.set('auth', authz, { secure: true, sameSite: 'Strict', httpOnly: true });
+            Cookies.set('auth', authz, { secure: true, sameSite: 'Strict' });
         } else {
             Cookies.remove('auth')
         }

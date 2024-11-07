@@ -13,3 +13,16 @@
 .collapsed {
   display: none;
 }
+
+li.nav-item.active button {
+  color: #02223e !important;
+  background-color: rgb(170, 249, 249);
+}
+
+.filter-sort label {
+  font-size: small !important;
+}
+
+.filter-sort select option {
+  font-size: x-small !important;
+}

@@ -15,11 +15,12 @@ class ToDoApiClient {
         this.axiosInstance.interceptors.response.use(
             (response) => response,
             (error: AxiosError<ErrorResponse>) => {
-                if (error.response?.status === 401)
-                    window.location.href = '/logout';
-                else if (error.response?.status !== 200)
-                    window.location.reload()
-                return Promise.reject(handleApiError(error));
+                // if (error.response?.status === 401)
+                //     // window.location.href = '/logout';
+                // else if (error.response?.status !== 200)
+                //     window.location.reload()
+                // return Promise.reject(handleApiError(error));
+                return Promise.resolve(error.response);
             }
         );
     }
@@ -49,7 +50,6 @@ class ToDoApiClient {
     }
 
     async deleteToDo(id: number): Promise<void> {
-        console.log('egrerg')
         await this.axiosInstance.delete(`/${id}`);
     }
 }
@@ -77,7 +77,7 @@ const handleApiError = (error: AxiosError<ErrorResponse>): never => {
     }
     throw error;
 };
-const API_URL = 'https://ubmlbv19sb.execute-api.us-east-1.amazonaws.com/prod-vercel-ui-app';
+const API_URL = 'https://83s5cim1u8.execute-api.us-east-1.amazonaws.com/terra';
 const apiClient = new ToDoApiClient(API_URL);
 
 export { API_URL, apiClient, ToDoApiClient };
@@ -93,7 +93,6 @@ async function createNewToDo() {
             deadline: new Date().toISOString()
         };
         const response = await apiClient.createToDo(newToDo);
-        console.log("Created ToDo with ID:", response.id);
     } catch (error) {
         console.error('Error creating todo:', error);
     }
@@ -107,7 +106,6 @@ async function updateToDo(id: number) {
             status: "IN_PROGRESS",
         };
         const updatedToDo = await apiClient.updateToDo(id, updateData);
-        console.log("Updated ToDo:", updatedToDo);
     } catch (error) {
         console.error('Error updating todo:', error);
     }

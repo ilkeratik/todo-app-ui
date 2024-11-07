@@ -6,7 +6,7 @@ import { useAuth } from "../../hooks/UseAuth";
 const HandleIdpCallback = () => {
 
     const location = useLocation();
-    const { setAuth, user } = useAuth();
+    const { setAuth, user, auth } = useAuth();
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
@@ -31,7 +31,6 @@ const HandleIdpCallback = () => {
                     if (data.access_token) {
                         await setAuth(data.access_token);
                     };
-                    console.log('Response from API:', data);
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
@@ -40,7 +39,6 @@ const HandleIdpCallback = () => {
             console.log('Authorization Code not found');
         }
         return () => {
-            console.log('HandleIdpAuthorizationCode unmounted');
         };
     }, []);
 
