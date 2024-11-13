@@ -27,6 +27,7 @@ export
                 })
                 .catch(error => {
                     console.error('Error fetching user info:', error);
+                    window.location.href = '/logout';
                 });
         }, []);
 

@@ -54,7 +54,10 @@ const ToDoProvider = ({ children }: { children: ReactNode }) => {
     }
     const fetchTodos = async () => {
         const data = await apiClient.getAllToDos();
-        if (data === null) return;
+        if (data === null) {
+            window.location.href = '/logout';
+            return;
+        }
         const todos = data.map(dto => ({
             id: dto.id,
             title: dto.title,
