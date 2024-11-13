@@ -4,7 +4,7 @@ const Login = () => {
     const [loginInProgress, setLoginInProgress] = useState(false);
     const redirectToCognito = () => {
         setLoginInProgress(true);
-        const clientId = process.env.REACT_APP_API_URL || '67vftfcmao21lunn2vjn9322nj';
+        const clientId = process.env.REACT_APP_COGNITO_CLIENT_ID || '67vftfcmao21lunn2vjn9322nj';
         const cognitoDomain = 'es-iap.auth.us-east-1.amazoncognito.com';
         const responseType = 'code';
         const currentDomain = window.location.origin;
