@@ -9,8 +9,7 @@ const Login = () => {
         const responseType = 'code';
         const currentDomain = window.location.origin;
         const redirectUri = `${currentDomain}/login-callback`;
-        const scope = "openid";
-        const cognitoUrl = `https://${cognitoDomain}/login?client_id=${clientId}&response_type=${responseType}&redirect_uri=${redirectUri}&scope=${scope}`;
+        const cognitoUrl = `https://${cognitoDomain}/login?client_id=${clientId}&response_type=${responseType}&redirect_uri=${redirectUri}`;
         window.location.href = cognitoUrl;
     };
 
