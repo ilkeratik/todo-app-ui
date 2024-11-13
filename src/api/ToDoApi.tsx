@@ -29,23 +29,27 @@ class ToDoApiClient {
         this.axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     }
 
-    async createToDo(createToDoRequest: CreateToDoRequest): Promise<CreateToDoResponse> {
+    async createToDo(createToDoRequest: CreateToDoRequest): Promise<CreateToDoResponse | null> {
         const response = await this.axiosInstance.post<CreateToDoResponse>('', createToDoRequest);
+        if (response === undefined) return null
         return response.data;
     }
 
-    async getToDo(id: number): Promise<ToDoDTO> {
+    async getToDo(id: number): Promise<ToDoDTO | null> {
         const response = await this.axiosInstance.get<ToDoDTO>(`/${id}`);
+        if (response === undefined) return null
         return response.data;
     }
 
-    async getAllToDos(): Promise<ToDoDTO[]> {
+    async getAllToDos(): Promise<ToDoDTO[] | null> {
         const response = await this.axiosInstance.get<ToDoDTO[]>('');
+        if (response === undefined) return null
         return response.data;
     }
 
-    async updateToDo(id: number, updateToDoRequest: UpdateToDoRequest): Promise<ToDoDTO> {
+    async updateToDo(id: number, updateToDoRequest: UpdateToDoRequest): Promise<ToDoDTO | null> {
         const response = await this.axiosInstance.patch<ToDoDTO>(`/${id}`, updateToDoRequest);
+        if (response === undefined) return null
         return response.data;
     }
 
@@ -77,36 +81,8 @@ const handleApiError = (error: AxiosError<ErrorResponse>): never => {
     }
     throw error;
 };
-const API_URL = 'https://83s5cim1u8.execute-api.us-east-1.amazonaws.com/terra';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
+console.log(API_URL)
 const apiClient = new ToDoApiClient(API_URL);
 
 export { API_URL, apiClient, ToDoApiClient };
-
-async function createNewToDo() {
-    try {
-        const newToDo: CreateToDoRequest = {
-            title: "New Task",
-            description: "This is a new task",
-            priority: "HIGH",
-            status: "TO_DO",
-            category: "WORK",
-            deadline: new Date().toISOString()
-        };
-        const response = await apiClient.createToDo(newToDo);
-    } catch (error) {
-        console.error('Error creating todo:', error);
-    }
-}
-
-// Example of updating a ToDo
-async function updateToDo(id: number) {
-    try {
-        const updateData: UpdateToDoRequest = {
-            title: "Updated Task",
-            status: "IN_PROGRESS",
-        };
-        const updatedToDo = await apiClient.updateToDo(id, updateData);
-    } catch (error) {
-        console.error('Error updating todo:', error);
-    }
-}
