@@ -1,5 +1,16 @@
 # To-do app
 
+## Agile project management
+### Definition of Ready
+- Explicit title explaining what should be done
+- Clear description of the story (As a ..., I want to ..., in order to...)
+- Estimation with Story Points
+- No blocking tasks to start working on it
+### Definition of Done
+- Implemented
+- Documented
+- Passes CI and build steps
+
 
 ## Application architecture diagram
 
