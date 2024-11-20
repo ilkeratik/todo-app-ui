@@ -5,7 +5,7 @@ const Login = () => {
     const redirectToCognito = () => {
         setLoginInProgress(true);
         const clientId = process.env.REACT_APP_COGNITO_CLIENT_ID || '67vftfcmao21lunn2vjn9322nj';
-        const cognitoDomain = 'es-iap.auth.us-east-1.amazoncognito.com';
+        const cognitoDomain = process.env.REACT_APP_COGNITO_DOMAIN || 'es-iap.auth.us-east-1.amazoncognito.com';
         const responseType = 'code';
         const currentDomain = window.location.origin;
         const redirectUri = `${currentDomain}/login-callback`;
