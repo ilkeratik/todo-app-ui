@@ -2,6 +2,8 @@
 - This project is aimed to implement a to-do list application utilizing AWS cloud services and employing agile development practices. 
 - The resulting web application enables users to authenticate through AWS Cognito and manage their personal to-do’s through an user-friendly UI. 
 - The application allows users to create to-do’s with titles, descriptions, images, categories, priorities, set deadlines and completion status. Users can update or delete specific to-do item, and on the to-do’s dashboard, can view all to-do’s in an organized way, apply filters and sort their to-do’s based on criterias including creation date, deadline, category, priority and completion status.
+### Dashboard UI
+<img width="1295" alt="image" src="https://github.com/user-attachments/assets/83d13e66-b12a-4981-a3fb-0023e387c4c2" />
 
 ## Sprints Overview
 The project is completed in two sprints focusing on different aspects of the application:
@@ -178,3 +180,7 @@ Only exception is /api/v1/auth/token endpoint which used to obtain access token 
     - Description: Deletes a specific to-do item by its ID.
     - Path Parameter: id: The unique identifier of the to-do item to be deleted.
     - Response: A confirmation message that the to-do item was successfully deleted or error details.
+### OpenAPI(Swagger) UI
+<img width="1296" alt="image" src="https://github.com/user-attachments/assets/cbf65102-5436-4dd6-880c-c2ff81e99b92" />
+ 
+
